@@ -1,0 +1,1 @@
+![comp](./data/info/images/readme/001_comp.png)
