@@ -7,9 +7,9 @@ Rock, Paper, Scissorsコンペのリポジトリ
 Kaggle-Cornell-Birdcall-Identification
 ├── README.md
 └── data    
-			└── info
-						└── images
-									└── readme     <---- readmeで使用するイメージ
+└── info
+└── images
+└── readme     <---- readmeで使用するイメージ
 ```
 
 ## Paper
