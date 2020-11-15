@@ -9,8 +9,7 @@ Kaggle-Cornell-Birdcall-Identification
 └── data
     └── info
         └── images
-            └── readme
-                └── 001_comp.png     <---- readmeで使用するイメージ
+            └── readme  <---- readmeで使用するイメージ
 ```
 
 ## Paper
