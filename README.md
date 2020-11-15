@@ -6,10 +6,11 @@ Rock, Paper, Scissorsコンペのリポジトリ
 ```
 Kaggle-Cornell-Birdcall-Identification
 ├── README.md
-└── data    
-└── info
-└── images
-└── readme     <---- readmeで使用するイメージ
+└── data
+    └── info
+        └── images
+            └── readme
+                └── 001_comp.png     <---- readmeで使用するイメージ
 ```
 
 ## Paper
