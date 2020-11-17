@@ -52,3 +52,9 @@ Kaggle-Cornell-Birdcall-Identification
 - kaggle日記の作成 ([参考](https://github.com/fkubota/kaggle-Cornell-Birdcall-Identification))
 - 多腕バンディットが現状ベストスコア(633.2)
 
+### 20201117
+- スコアリングの変更点
+-- スコアが20以上勝ち越していないと勝利判定されない
+-- 50％で高いレーティングのbotと対戦できるように
+
+
