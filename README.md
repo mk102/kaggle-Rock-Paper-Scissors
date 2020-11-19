@@ -57,4 +57,10 @@ Kaggle-Cornell-Birdcall-Identification
 	- スコアが20以上勝ち越していないと勝利判定されない
 	- 50％で高いレーティングのbotと対戦できるように
 
+### 20201119
+- 多腕バンディットアルゴリズムの実装コード解読
+
+```Python
+import numpy as np
+```
 
