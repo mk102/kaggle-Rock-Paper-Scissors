@@ -61,6 +61,79 @@ Kaggle-Cornell-Birdcall-Identification
 - 多腕バンディットアルゴリズムの実装コード解読
 
 ```Python
-import numpy as np
-```
+# 全エージェントのベースとなるクラス
+class agent():
+	def initial_step(self):
+		return np.random.randint(3)
 
+	def history_step(self, history):
+		return np.random.randint(3)
+
+	def step(self, history):
+		if len(history) == 0:
+			return self.initial_step()
+		else:
+			return self.history_step(history)
+
+# エージェント例：前の対戦相手の手＋シフトを返すエージェント
+class mirror_shift(agent):
+	def __init__(self, shift=0):
+		self.shift = shift
+
+	def history_step(self, history):
+		return (history[-1]['competitorStep'] + self.shift) % 3
+
+# history.csvを読み込む関数
+def load_history(file = "history.csv"):
+	return pd.read_csv(file).to_dict('records')
+
+# 対戦相手の最新手をhistoryに追記する関数
+def update_competitor_step(history, competitorStep):
+	history[-1]['competitorStep'] = competitorStep
+	return history
+
+# 手を記録する関数
+def log_step(step = None, history = None, agent = None, competitorStep = None):
+	if step is None:
+		step = np.random.randint(3)
+	if history is None:
+		history = []
+	history.append({'step' : step, 'competitorStep' : competitorStep, 'agent' : agent})
+	save_hisory(history)
+	return step
+
+if observation.step == 0:
+	history = []
+	bandit_state = {k:[1, 1] for k in agents.keys()}
+else:
+	history = update_competitor_step(load_history(), observation.lastOpponentAction)
+
+	# バンディットの状態を読み込み
+	with open('bandit.json') as json_file:
+		bandit_state = json.load(json_file)
+
+	# 前回の対戦結果を元にバンディットの状態を更新
+	if (history[-1]['competitorStep'] - history[-1]['step']) % 3 == 1:
+		bandit_state[history[-1]['agent']][1] += 1
+	elif (history[-1]['competitorStep'] - history[-1]['step']) % 3 == 2:
+		bandit_state[history[-1]['agent']][0] += 1
+	else:
+		bandit_state[history[-1]['agent']][0] += 0.5
+		bandit_state[history[-1]['agent']][1] += 0.5
+with open('bandit.json', 'w') as outfile:
+	json.dump(bandit_state, outfile)
+
+# 使用するエージェントを決定するためにベータ分布から乱数を発生
+best_proba = -1
+best_agent = None
+for k in bandit_state.keys():
+	proba = np.random.beta(bandit_state[k][0], bandit_state[k][1])
+	if proba > best_proba:
+		best_proba = proba
+		best_agent = k
+
+step = agents[best_agent].step(history)
+return log_step(step, history, best_agent)
+
+
+```
